@@ -22,9 +22,9 @@ files_to_clean = []
 
 def create_multiple_bitrate_versions(filename):
     for version in versions:
-        command = "ffmpeg -i {} -vf scale={}:-2 -x264opts 'keyint={}:min-keyint={}:no-scenecut' -strict -2 -r {} output/{}-{} -y".format(
+        command = "ffmpeg -i {} -vf scale={}:-2 -x264opts 'keyint={}:min-keyint={}:no-scenecut' -strict -2 -r {} {}/{}-{} -y".format(
             filename, version, config.get('keyint'), config.get('keyint'),
-            config.get('framerate'), version, filename)
+            config.get('framerate'), base_filename, version, filename)
         print(command)
         os.system(command)
 
