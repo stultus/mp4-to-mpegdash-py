@@ -91,5 +91,5 @@ else:
 
     # cleanup
     for file_name in files_to_clean:
-        print('rm ' + base_filename + '/' + file_name)
-        os.remove(base_filename + '/' + file_name)
+        print('rm ' + file_name)
+        os.remove(file_name)
