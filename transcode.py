@@ -15,7 +15,7 @@ config = {
 }
 base_filename = None
 # pre-defined resolutions
-versions = ['246', '426', '858', '1280', '1920']
+versions = ['256', '426', '854', '1280', '1920']
 
 files_to_clean = []
 
