@@ -6,7 +6,13 @@ bitrate versions for dash
 import os
 import sys
 from xml.dom import minidom
+try:
+    import boto3
+    from datetime import datetime
+except ImportError:
+    pass
 
+os.system("source .env")
 config = {
     'keyint': '59',
     'framerate': '30000/1001',
@@ -18,7 +24,10 @@ base_filename = None
 versions = ['256', '426', '854', '1280', '1920']
 
 files_to_clean = []
-
+AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
+AWS_ACCESS_SECRET_KEY = os.getenv('AWS_ACCESS_SECRET_KEY')
+bucket_name = os.getenv('S3_BUCKET_NAME')
+region = os.getenv('AWS_REGION')
 
 def create_multiple_bitrate_versions(filename):
     for version in versions:
@@ -74,6 +83,21 @@ def merge_mpds():
     with open(base_filename + "/" + base_filename + ".mpd", 'w') as f:
         f.write(root.toxml())
 
+def upload_to_s3(bucket=None):
+    if bucket:
+        s3_client = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_ACCESS_SECRET_KEY,
+            )
+        for filename in os.listdir(base_filename):
+            file = base_filename+"/"+filename
+            date = datetime.date(datetime.now()).strftime("%d%m%Y")
+            file_path = date + "/" + file
+            with open(file, "rb") as f:
+                s3_client.upload_fileobj(f, bucket, file_path)
+            if filename.split('.')[-1] == "mpd":
+                print(" \033[1;32;40m https://s3.{}.amazonaws.com/{}/{}".format(region,bucket,file_path))
 
 if len(sys.argv) == 1:
     print("Enter the filename")
@@ -87,9 +111,10 @@ else:
         pass
     create_multiple_bitrate_versions(filename)
     create_multiple_segments(filename)
-    merge_mpds()
-
+    merge_mpds()  
     # cleanup
     for file_name in files_to_clean:
         print('rm ' + file_name)
         os.remove(file_name)
+    # upload to s3
+    upload_to_s3(bucket_name)
