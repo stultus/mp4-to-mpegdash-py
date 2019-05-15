@@ -12,7 +12,7 @@ try:
 except ImportError:
     pass
 
-os.system("source .env")
+os.system(". .env")
 config = {
     'keyint': '59',
     'framerate': '30000/1001',
