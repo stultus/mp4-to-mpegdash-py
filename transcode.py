@@ -9,8 +9,11 @@ from xml.dom import minidom
 try:
     import boto3
     from datetime import datetime
+
+    from dotenv import load_dotenv
+    load_dotenv()
 except ImportError:
-    pass
+    print("Videos will not be uploaded to S3")
 
 os.system(". .env")
 config = {
