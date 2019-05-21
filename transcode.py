@@ -15,7 +15,6 @@ try:
 except ImportError:
     print("Videos will not be uploaded to S3")
 
-os.system(". .env")
 config = {
     'keyint': '59',
     'framerate': '30000/1001',
@@ -106,6 +105,10 @@ if len(sys.argv) == 1:
     print("Enter the filename")
 else:
     filename = sys.argv[1]
+    if (' ' in filename):
+        new_name = filename.replace(" ","-")
+        os.rename(filename, new_name)
+        filename = new_name
     base_filename = filename.split('.')[0]
     # create output file directory
     try:
