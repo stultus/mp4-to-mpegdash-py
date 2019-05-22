@@ -6,11 +6,11 @@ Python Script to convert a MP4 file into onDemand MPEG-DASH
 
 ## Installation
 ### On Linux
-`$ sudo apt-get install ffmpeg`
+`$ sudo apt-get install ffmpeg`</br>
 `$ sudo apt-get install gpac`
 
 ### On Mac
-`$ brew install ffmpeg`
+`$ brew install ffmpeg`</br>
 `$ brew install MP4Box`
 
 ## Usage 
