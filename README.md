@@ -12,6 +12,8 @@ Python Script to convert a MP4 file into onDemand MPEG-DASH
 ### On Mac
 `$ brew install ffmpeg`</br>
 `$ brew install MP4Box`
+* ffmpeg version 4.1.3
+* MP4Box - GPAC version 0.7.1
 
 ## Usage 
 `$ python transcode.py $FILENAME`
