@@ -94,7 +94,7 @@ def upload_to_s3(bucket=None):
             )
         for filename in os.listdir(base_filename):
             file = base_filename+"/"+filename
-            date = datetime.date(datetime.now()).strftime("%d%m%Y")
+            date = datetime.date(datetime.now()).strftime("%d-%m-%Y")
             file_path = date + "/" + file
             with open(file, "rb") as f:
                 s3_client.upload_fileobj(f, bucket, file_path)
