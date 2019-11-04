@@ -33,7 +33,7 @@ region = os.getenv('AWS_REGION')
 
 def create_multiple_bitrate_versions(filename):
     for version in versions:
-        command = "ffmpeg -i {} -vf scale={}:-2 -x264opts keyint={}:min-keyint={}:no-scenecut -strict -2 -r {} {}/{}-{} -y".format(
+        command = "ffmpeg -i {} -vf 'hqdn3d,detelecine,yadif,scale={}:-2' -x264opts 'keyint={}:min-keyint={}:no-scenecut' -strict -2 -preset veryfast -crf 25 -r {} {}/{}-{} -y".format(
             filename, version, config.get('keyint'), config.get('keyint'),
             config.get('framerate'), base_filename, version, filename)
         print(command)
