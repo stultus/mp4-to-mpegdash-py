@@ -59,7 +59,7 @@ def create_multiple_segments(filename):
         config.get("chunk"),
         config.get("profile"),
         "-out audio.mpd",
-        versions[-1:][0],
+        versions[0],
         filename,
         "#audio",
     )
