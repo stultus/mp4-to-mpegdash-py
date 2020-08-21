@@ -22,7 +22,7 @@ files_to_clean = []
 
 def create_multiple_bitrate_versions(filename):
     for version in versions:
-        command = 'ffmpeg -i {} -vf "hqdn3d,detelecine,yadif,scale={}:-2" -x264-params "keyint={}:min-keyint={}:no-scenecut" -strict -2 -preset veryfast -crf 25 -r {} {}/{}-{} -y'.format(
+        command = 'ffmpeg -i {} -vf "hqdn3d,detelecine,yadif,scale={}:-2" -x264-params "keyint={}:min-keyint={}:no-scenecut" -b:a 50k -strict -2 -preset veryfast -crf 25 -r {} {}/{}-{} -y'.format(
             filename,
             version,
             config.get("keyint"),
