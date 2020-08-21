@@ -69,7 +69,7 @@ def create_multiple_segments(filename):
     os.chdir("..")
 
 
-def merge_mpds():
+def merge_mpds(mpd_file_name):
     root = None
     for mpd in files_to_clean:
         if not root:
@@ -79,7 +79,7 @@ def merge_mpds():
         current_mpd_root = minidom.parse(mpd).documentElement
         adaption_set = current_mpd_root.childNodes[3].childNodes[1]
         period_element.appendChild(adaption_set)
-    with open(base_filename + "/" + base_filename + ".mpd", "w") as f:
+    with open(base_filename + "/" + mpd_file_name, "w") as f:
         f.write(root.toxml())
 
 
@@ -91,6 +91,7 @@ else:
         new_name = filename.replace(" ", "-")
         os.rename(filename, new_name)
         filename = new_name
+    mpd_file_name = filename.replace(".mp4", ".mpd")
     base_filename = filename.split(".")[0]
     # create output file directory
     try:
@@ -99,7 +100,7 @@ else:
         pass
     create_multiple_bitrate_versions(filename)
     create_multiple_segments(filename)
-    merge_mpds()
+    merge_mpds(mpd_file_name)
     # cleanup
     for file_name in files_to_clean:
         print("rm " + file_name)
